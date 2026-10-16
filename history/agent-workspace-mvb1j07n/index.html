@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<canvas id="c"></canvas>
+<div id="hud">
+  <div class="city"><b id="cname">Xenopolis</b><i id="tier">Outpost</i></div>
+  <div class="stats">
+    <span title="Population">👽 <b id="pop">0</b></span>
+    <span title="Lumen"><em>◈</em> <b id="lumen">0</b></span>
+    <span title="Happiness">♥ <b id="happy">0</b></span>
+    <span id="netH" title="Net Lumen per phase"></span>
+  </div>
+  <div class="row2"><span id="date"></span>
+    <div class="speed"><button data-speed="0" aria-label="Pause">❚❚</button><button data-speed="1" aria-label="Normal speed">▶</button><button data-speed="3" aria-label="Fast">▶▶</button><button id="menuB" aria-label="City menu">☰</button></div>
+  </div>
+  <div class="tprog" title="Progress to the next tier"><i id="tbar"></i><span id="tnext"></span></div>
+  <div id="goal" title="Current goal"></div>
+</div>
+<div id="side">
+  <div class="rci"><div><i id="dr" class="r"></i><span>R</span></div><div><i id="dc" class="c"></i><span>C</span></div><div><i id="di" class="i"></i><span>I</span></div></div>
+  <canvas id="mini" title="Minimap: tap to jump"></canvas>
+  <button id="miniB" class="ub" aria-label="Change minimap view (M)">city</button>
+  <div class="util"><button id="pwB" class="ub" aria-label="Energy: tap to place a pylon">⚡ <b id="pw">0/0</b></button><button id="wtB" class="ub" aria-label="Water: tap to place a mist well">💧 <b id="wt">0/0</b></button></div>
+</div>
+<div id="tip" hidden></div>
+<div id="toast"></div>
+<button id="aiB" aria-label="Watch the AI build (I)">✦ Watch AI</button>
+<div id="dock"><div id="aiBar" hidden><span id="aiName"></span><button id="aiGo"></button><button id="aiNew" aria-label="Another AI world">↻</button><button id="aiHome"></button></div><div id="advice" role="status"></div><div id="hint"></div><div id="sub" class="bar" hidden></div><div id="bar" class="bar"></div></div>
+<div id="panel" hidden>
+  <div class="ph"><b>City hall</b><button id="closeP" aria-label="Close">✕</button></div>
+  <label class="tax">Taxes <input id="tax" type="range" min="0" max="20" step="1"><span id="taxV"></span></label>
+  <div class="budget"><div><i>Income</i><b id="inc"></b></div><div><i>Upkeep</i><b id="exp"></b></div><div><i>Net / phase</i><b id="net"></b></div></div>
+  <h4>Growth</h4><canvas id="spark" aria-label="Population and Lumen history"></canvas><div id="sparkL" class="sparkL"></div>
+  <div id="best" class="sparkL"></div><h4>Milestones</h4><ul id="tiers"></ul>
+  <h4>Chronicle</h4><ul id="log"></ul>
+  <h4>AI worlds</h4><ul id="worlds"></ul>
+  <h4>Figurine bundle</h4><div id="figBox"></div>
+  <div class="pb"><button id="soundB">Soundtrack: off</button><button id="newB" class="danger">New city</button></div>
+</div>
+<div id="confirm" class="modal" hidden><div><b>Start a new city?</b><p>Your current city will be replaced by a fresh world.</p><button id="noB">Keep playing</button><button id="yesB" class="danger">New city</button></div></div>
+<div id="namePrompt" class="modal" hidden><div><b>Found your city</b><p>A quiet shore on an alien world. Lay glowing paths, zone pods and markets, power them with pylons and mist wells.</p>
+  <input id="cityName" maxlength="40" placeholder="Xenopolis" aria-label="City name"><button id="foundB">Found city</button></div></div>
+<div id="aiSheet" class="modal" hidden><div><b>Watch the AI build</b><p id="aiP"></p><div id="aiStyles" class="chips"></div><button id="aiResume" hidden></button><button id="aiMayor"></button><button id="aiNo">Not now</button></div></div>
+<script src="js/state.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/figs.js"></script>
+<script src="js/world.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/main.js"></script>
+<script src="js/_test.js"></script>
+<script src="js/figurines.js"></script>
+<script type="module">
+import * as THREE from 'three';
+App.THREE = THREE;
+App.boot(document.getElementById('c'));
+</script>
+</body></html>

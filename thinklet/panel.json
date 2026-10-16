@@ -1,0 +1,617 @@
+{
+  "id": "4htowjdo",
+  "title": "Xenopolis",
+  "prompt": "A full, playable city-builder game in the spirit of SimCity, set on a beautiful, unique alien world. It's Chris's own original take, not a clone. Built in three.js (WebGL) as a real game played right in the card, and it gets bigger in the large view.\n\nWORLD AND LOOK: An isometric/orbit 3D view of an alien planet surface. Bioluminescent terrain in teal, violet and magenta, crystal outcrops, glowing fungal forests, lavender seas, two moons and a ringed gas giant in the sky, and a slow day/night cycle (nights glow, days are hazy pastel). Soft fog, bloom, gentle shadows. It should feel calm, premium and gorgeous, like a living diorama. The camera pans (drag/WASD), zooms (scroll), rotates (right-drag/Q,E).\n\nALIEN FIGURINES (made procedurally in code, sculpted like Blender figurine models: smooth bevelled shapes, subsurface-like glow, a handmade toy-diorama feel, many small parts):\n- Residential: spore-pod dwellings, coral spires, floating bubble homes that grow in tiers as density rises (3 levels each).\n- Commercial: glowing mushroom markets, orbiting trade rings, holo-bazaars.\n- Industrial: crystal refineries, plasma harvesters with drifting vapor.\n- Civic: energy pylons (power), mist wells (water), a Hive Council dome (city hall), healing blooms (health), star academies (education), a UFO port.\n- Transport: glowing levitation paths instead of roads. Little UFOs and saucers fly between buildings along routes, and tiny alien citizens (blobby, antennae, several species) wander paths.\n- Landmarks unlocked by milestones: Monolith of Echoes, Sky Whale Sanctuary, Mothership dock.\nEach building gets small idle animations (pulsing light, bobbing, rotating rings) and a materialize animation when placed.\n\nSIMULATION (real game logic): zone residential/commercial/industrial on a grid; buildings grow when zones have power, water and path access. Track population, Lumen (currency), happiness, energy and water supply/demand, and pollution (spore smog from industry). RCI demand bars. Taxes slider. Monthly budget ticks with income/expenses. Land value is affected by parks (glow gardens) and pollution. Random events: meteor showers, spore blooms, visiting traders, a comet festival. Speed controls: pause, 1x, 3x. Bulldoze tool and undo.\n\nUI: A slim glassy toolbar (zones, paths, utilities, civic, landmarks, bulldoze) with figurine icons, a top HUD (population, Lumen, happiness, date in alien cycles, speed), a minimap, hover tooltips, and a city-name prompt at the start. A milestone log of tiered names (Outpost → Colony → Hive → Metropolis → Star Capital). Ambient generative WebAudio soundtrack, off by default with a toggle.\n\nSAVE: autosave the whole city with window.cabinet.save/load (localStorage fallback) and resume where you left off. Offer a New City button with a confirmation.\n\nPERFORMANCE: instanced meshes, capped pixel ratio, pause rendering when offscreen/hidden, smooth on a laptop. Respect prefers-reduced-motion.\n\nACTIONS for chat: status(), setSpeed(speed), placeLandmark(name), newCity(name), cityReport().\n\nChange requested 2026-10-16: Use the real Blender figurines from the attached file xenopolis_figurines_bundle.js (31 embedded GLB models: res_sporepod_1-3, res_coral_spire_1-3, res_bubble_home_1-3, the commercial com_* models, industry, civic, landmark lm_* models, vehicles veh_saucer and cargo UFO, citizens cit_blob_*). Load them with three.js GLTFLoader and use them for every building type and density level, landmark, UFO/saucer and citizen, scaled to fit each tile (models are ~1 unit tall, base at origin, vertex colors). Keep the materialize animation, pulse/bob/ring idle animations, instancing and glow. If any model fails to load, fall back to the current procedural shape for it. Do not touch the save data (city 'huuu'), simulation, UI or actions.\n\nChange requested 2026-10-16: Use the real Blender figurines from xenopolis_figurines_bundle.js, which is now kept in this thinklet (from Creations). It has 31 embedded GLB models: res_sporepod_1-3, res_coral_spire_1-3, res_bubble_home_1-3, com_* commercial, industry, civic, lm_* landmarks, veh_saucer and cargo UFO, cit_blob_* citizens. Load them with three.js GLTFLoader and use them for every building type and density level, landmark, UFO/saucer and citizen, scaled to fit each tile (models ~1 unit tall, base at origin, vertex colors). Keep the materialize animation, pulse/bob/ring idle animations, instancing and glow. If a model fails to load, fall back to the procedural shape for it. Show a small 'Figurines: N/31 loaded' note in the H health check. Do not touch the save data (city 'huuu'), simulation, UI or actions.\n\nChange requested 2026-10-16: Remove the Blender figurine attachment request entirely: drop both 2026-10-16 change requests about xenopolis_figurines_bundle.js from the brief, stop looking for or asking to re-attach the bundle, and clear the headline/note that says it's waiting on the figurines or to re-attach them. Keep the current procedural buildings exactly as they are. Do not touch the save data (city 'huuu'), simulation, UI or actions.\n\nChange requested 2026-10-16: Use the file I gave it, kept in its own store: xenopolis_figurines_bundle.js as \"drops/xenopolis_figurines_bundle.js\". Read it with cabinet.store.get and show what it holds, and handle files given later the same way with cabinet.onDrop.",
+  "cadence": "manual",
+  "status": "ready",
+  "headline": "Xenopolis now saves constantly and picks up exactly where you left off",
+  "items": [],
+  "note": "Your city huuu is untouched. It saves within 0.4s of each change, every 5s, and when the card is closed, hidden or loses focus. That covers the progress toward the next phase, the camera view, and any AI dream or AI session that's running.",
+  "createdAt": 1792115605333,
+  "updatedAt": 1792179263848,
+  "mode": "scene",
+  "job": null,
+  "progress": null,
+  "opens": 21,
+  "openedAt": 1792183736219,
+  "sceneError": null,
+  "scene": {
+    "aspect": "4:5",
+    "caption": "Version 46, as you asked: saves within half a second and every 5s, flushes on close, resumes AI dreams after a reload, store rule error fixed",
+    "day": 44,
+    "state": {
+      "version": 46
+    },
+    "log": [
+      {
+        "day": 1,
+        "text": "A starter village on a quiet lavender shore. Name it to begin.",
+        "at": 1792117671764,
+        "kind": "build"
+      },
+      {
+        "day": 2,
+        "text": "Version 2: Brush-up: saves flushed on fold/close, saved city validated, resize-safe after hiding, stray errors caught",
+        "at": 1792117714912,
+        "kind": "evolve"
+      },
+      {
+        "day": 3,
+        "text": "Version 3: advisor tip above the toolbar, growth chart in the ☰ menu, a cost note after each build, keys 1–7 pick tools",
+        "at": 1792118164645,
+        "kind": "evolve"
+      },
+      {
+        "day": 4,
+        "text": "Version 4: smog lowers happiness, tap the advisor tip to pick its tool, camera view saved, upkeep in tooltips, graphics-loss recovery",
+        "at": 1792118220390,
+        "kind": "evolve"
+      },
+      {
+        "day": 5,
+        "text": "Version 5: Hive progress bar in the HUD, bulldozed civic sites refund half, peak population saved, soundtrack pauses while hidden",
+        "at": 1792118254886,
+        "kind": "evolve"
+      },
+      {
+        "day": 6,
+        "text": "Version 6: city grows while you're away (up to 6 phases), net Lumen trend saved and shown, toasts moved off the city, bolder Hive bar",
+        "at": 1792118292889,
+        "kind": "evolve"
+      },
+      {
+        "day": 7,
+        "text": "Version 7: tap ⚡/💧 to place a pylon or well, amber warning near capacity, aurora event powers pylons, setTax action, safer speed input",
+        "at": 1792118333274,
+        "kind": "evolve"
+      },
+      {
+        "day": 8,
+        "text": "Version 8: brownouts slow growth instead of stopping it, zone tooltips say why a zone is idle, Undo is kept after reload, the power chip pulses when power runs ",
+        "at": 1792118370849,
+        "kind": "evolve"
+      },
+      {
+        "day": 9,
+        "text": "Version 9: minimap shows land value and smog (M), Moonlantern Night on real evenings, fuller city report, building memory freed on rebuild",
+        "at": 1792118415299,
+        "kind": "evolve"
+      },
+      {
+        "day": 10,
+        "text": "Version 10: industry beside crystal outcrops gives +40% jobs, Glimmerfruit Harvest in October, dated chronicle, Undo shows steps left",
+        "at": 1792118463774,
+        "kind": "evolve"
+      },
+      {
+        "day": 11,
+        "text": "Version 11: small energy shortfalls are imported for Lumen, Hollowmoon Eve in late October, Esc returns to Look, clearer hint pill",
+        "at": 1792118496070,
+        "kind": "evolve"
+      },
+      {
+        "day": 12,
+        "text": "Version 12: glow gardens soak up nearby smog, slim tap-to-dismiss toasts above the dock, 120 phases of history, new history action",
+        "at": 1792118527528,
+        "kind": "evolve"
+      },
+      {
+        "day": 13,
+        "text": "Version 13: Plasma reactor (+260 energy, from Colony), smarter energy advice, net Lumen/phase chip in the HUD, tier dates saved in Milestones",
+        "at": 1792118659324,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 14,
+        "text": "Version 14: 14-step goal ladder with Lumen rewards, ★ goal line in the HUD, goal in chat + city report, safer away-time catch-up",
+        "at": 1792118700008,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 15,
+        "text": "Version 15: small water gaps bought for Lumen, Space pauses/resumes, % progress on population goals, Undo from chat, as you asked to keep building",
+        "at": 1792118731152,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 16,
+        "text": "Version 16: Mist condenser (+260 water) with vapor towers, advice spots the water cap, tools show their output, build utilities from chat",
+        "at": 1792118778988,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 17,
+        "text": "Version 17: tap the advice to build the missing utility, UFO ports earn tourism from landmarks, cycle reports in the Chronicle, neater advice pill",
+        "at": 1792118823507,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 18,
+        "text": "Version 18: Moon tide event (+60 water), ⌘Z undo, shorter one-line advice, longer 12-entry Chronicle. More building, as you asked",
+        "at": 1792118855556,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 19,
+        "text": "Version 19: bigger cities can import more, tap a short ⚡/💧 chip to build a fix, Lumen-moth nights, water and energy saved in history. More building, as you ask",
+        "at": 1792118887532,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 20,
+        "text": "Version 20: tap the ★ goal to pick its tool, academies add up to +20% taxes, a Ringturn Fair each cycle, event tally saved. More building, as you ask",
+        "at": 1792118932548,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 21,
+        "text": "Version 21: Crystal song event pays crystal-fed industry, G/F/M shortcuts, clearer map toggle, sharper advice pill. More building, as you ask",
+        "at": 1792118961131,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 22,
+        "text": "Version 22: Driftseed event plants wild glow gardens, 1–7 tool keys, peak Lumen saved, music pauses while hidden. More building, as you ask",
+        "at": 1792118996834,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 23,
+        "text": "Version 23: builder-mite swarm event raises buildings, last toolbar tab remembered, Lumen left after each build, H health check. More building, as you ask",
+        "at": 1792119032086,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 24,
+        "text": "Version 24: glowworm caravan event pays tolls on paths, B budget key, event tally from chat, safer random events. More building, as you asked",
+        "at": 1792119059028,
+        "kind": "evolve",
+        "guide": "keep adding, evolving, improving and making even better each time in so many ways to just keep building this out to be the best version of itself with amazing visuals and gameplay"
+      },
+      {
+        "day": 24,
+        "text": "Version 24: unchanged. The Blender figurine bundle didn't arrive with the request; re-attach it to swap them in",
+        "at": 1792120282800,
+        "kind": "change"
+      },
+      {
+        "day": 24,
+        "text": "Version 24: unchanged. The figurine bundle still isn't in this thinklet's files. Re-attach it to swap them in",
+        "at": 1792120362317,
+        "kind": "change"
+      },
+      {
+        "day": 24,
+        "text": "Version 24: procedural figurines, as you asked. Building, zoning and the huuu save are untouched",
+        "at": 1792120442021,
+        "kind": "change"
+      },
+      {
+        "day": 24,
+        "text": "Version 25: a 📦 chip lists what's in the figurine bundle, and dropped bundles get read too. City huuu untouched",
+        "at": 1792120485447,
+        "kind": "change"
+      },
+      {
+        "day": 25,
+        "text": "Version 26, as you asked: an 🤖 AI Mayor plays huuu or dreams up wild sandbox worlds, with a live feed, a cinematic camera and its build tally saved",
+        "at": 1792172795721,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 26,
+        "text": "Version 27, as you asked: ⚡ Insane world mode (◈2M, hyperbuild, swarms), best dream named & saved, AI feed history on hover, stuck bundle chip gone",
+        "at": 1792172830786,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 27,
+        "text": "Version 28, as you asked: AI pace 1×/2×/4× (J), a saved list of recent dreams, a sweeping camera for dream worlds, and the AI steps down safely if it hits an er",
+        "at": 1792172868052,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 28,
+        "text": "Version 29, as you asked: the AI bar shows live population and watch time, and dream worlds zone 2–4× more per step at faster pace",
+        "at": 1792172892195,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 29,
+        "text": "Version 30, as you asked: AI build styles (Sprawl, Eco, Megacity), resume saved dream worlds, 🏆 citizen milestones, AI stops while the card is hidden",
+        "at": 1792172945382,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 30,
+        "text": "Version 31, as you asked: 🌀 Spiral AI style, 🎬 cinema mode (V), dream worlds saved every minute, swooping camera in Insane mode",
+        "at": 1792172980938,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 31,
+        "text": "Version 32, as you asked: 🌌 Endless AI hops to new worlds, AI bar shows the next milestone, swarm bursts at milestones, safer dream saves",
+        "at": 1792173008297,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 32,
+        "text": "Version 33, as you asked: dream saves fixed, endless new world names, swarms grow with the city, set AI pace from chat",
+        "at": 1792173033081,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 33,
+        "text": "Version 34, as you asked: ❄ Fractal AI style, Endless mode moves to the next style on each new world, the AI feed shows its style, and dream saves are fixed",
+        "at": 1792173062174,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 34,
+        "text": "Version 35, as you asked: dream worlds get a ★ score and best-world trophy, an AI director stages meteors and comets, a milestone progress bar, and the store er",
+        "at": 1792173123176,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 35,
+        "text": "Version 36, as you asked: 🪐 Ringworld AI style, AI gardens its dream worlds, autosaves keep your ★ scores, store error fixed, shortcut hints",
+        "at": 1792173171674,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 36,
+        "text": "Version 37, as you asked: 🎲 Wild AI style switches plans every 40s, watch time saved, tips when the AI starts, Space and M keys fixed",
+        "at": 1792173221743,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 37,
+        "text": "Version 38, as you asked: ☄ cataclysms the AI rebuilds from, 🎰 one-tap Surprise me, best ★ per style saved, R replays, tidier small card",
+        "at": 1792173275134,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 38,
+        "text": "Version 39, as you asked: 🏝 Archipelago AI builds paths across the sea, ⏭ next world (N), ⏱ fastest-to-10k records per style, store error fixed",
+        "at": 1792173332459,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 39,
+        "text": "Version 40, as you asked: 🤖 one-tap Watch AI, 🧬 Tendril style, a spark on every AI build, dream list shows style icons, store error fixed",
+        "at": 1792173448948,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 40,
+        "text": "Version 41, as you asked: ⚡ 8× Ludicrous AI pace, a camera dive at each milestone, store error fixed, figurine chip off the small card",
+        "at": 1792173487251,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 41,
+        "text": "Version 42, as you asked: 🌸 Hyperbloom surges at each AI milestone, 📜 AI decision log (L), growth sparklines on past dreams, store error fixed",
+        "at": 1792173586488,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 42,
+        "text": "Version 43, as you asked: ✋ tap to bless AI dream worlds (+Lumen, buildings level up), gold glow on the AI's newest build, blessings counted, store error fixed",
+        "at": 1792173638889,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 43,
+        "text": "Version 44, as you asked: 🎯 bet ◈500 that the AI hits a target in 3 min (win ◈1,500), one-tap Watch AI, Friday fireworks, store rule fixed",
+        "at": 1792173696286,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 44,
+        "text": "Version 45, as you asked: 🔥 AI build combos with a saved best, the Watch AI pill shows your record, sparks every ×10, store rule error fixed",
+        "at": 1792173728217,
+        "kind": "evolve",
+        "guide": "turn this into the dopest game ever and add a mode where I can watch ai play and build insane worlds"
+      },
+      {
+        "day": 44,
+        "text": "Version 46, as you asked: saves within half a second and every 5s, flushes on close, resumes AI dreams after a reload, store rule error fixed",
+        "at": 1792179263848,
+        "kind": "change"
+      }
+    ],
+    "rev": 49,
+    "evolvedAt": 1792173728217,
+    "bytes": 171486,
+    "interactive": true
+  },
+  "evolve": true,
+  "foundation": {
+    "state": "done",
+    "at": 1792117714916,
+    "note": "saves flushed on fold/close, saved city validated, resize-safe after hiding, stray errors caught",
+    "manual": false
+  },
+  "costs": [
+    {
+      "at": 1792173123181,
+      "usd": 0.6435,
+      "kind": "evolve",
+      "ms": 60988,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173171678,
+      "usd": 0.2813,
+      "kind": "evolve",
+      "ms": 48475,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173221748,
+      "usd": 0.6338,
+      "kind": "evolve",
+      "ms": 50049,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173275138,
+      "usd": 0.6821,
+      "kind": "evolve",
+      "ms": 53374,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173332464,
+      "usd": 0.7018,
+      "kind": "evolve",
+      "ms": 57311,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173448955,
+      "usd": 0.8452,
+      "kind": "evolve",
+      "ms": 116470,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173487256,
+      "usd": 0.6075,
+      "kind": "evolve",
+      "ms": 38280,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173586494,
+      "usd": 0.7455,
+      "kind": "evolve",
+      "ms": 99217,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173638896,
+      "usd": 0.6927,
+      "kind": "evolve",
+      "ms": 52379,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173696292,
+      "usd": 0.6661,
+      "kind": "evolve",
+      "ms": 57375,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792173728223,
+      "usd": 0.2901,
+      "kind": "evolve",
+      "ms": 31913,
+      "model": "claude-opus-5-5"
+    },
+    {
+      "at": 1792179263854,
+      "usd": 0.9682,
+      "kind": "change",
+      "ms": 99262,
+      "model": "claude-opus-5-5"
+    }
+  ],
+  "version": 1792179263854,
+  "latestVersion": 1792179263854,
+  "commands": [
+    {
+      "name": "figurineBundle",
+      "description": "List the models in the figurine bundle",
+      "readOnly": true
+    },
+    {
+      "name": "status",
+      "description": "Quick status of the city: population, Lumen, happiness, tier and date",
+      "readOnly": true
+    },
+    {
+      "name": "setSpeed",
+      "description": "Set game speed: 0 pause, 1 normal, 3 fast",
+      "params": {
+        "speed": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "speed"
+      ]
+    },
+    {
+      "name": "placeLandmark",
+      "description": "Place an unlocked landmark (Monolith of Echoes, Sky Whale Sanctuary, Mothership dock) near the city center",
+      "params": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    {
+      "name": "newCity",
+      "description": "Start a brand-new city (erases the current one)",
+      "params": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "confirm": "Start a new city? The current city will be replaced."
+    },
+    {
+      "name": "setTax",
+      "description": "Set the city tax rate, 0 to 20 percent",
+      "params": {
+        "tax": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "tax"
+      ]
+    },
+    {
+      "name": "history",
+      "description": "Population, Lumen and happiness over the recent phases (up to 120)",
+      "params": {
+        "last": {
+          "type": "number",
+          "description": "How many phases; 12 if left out"
+        }
+      },
+      "readOnly": true
+    },
+    {
+      "name": "buildUtility",
+      "description": "Build a utility near the city center: pylon, reactor, mist well or mist condenser",
+      "params": {
+        "kind": {
+          "type": "string",
+          "description": "pylon | reactor | well | condenser"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    {
+      "name": "undo",
+      "description": "Undo the last build or bulldoze step"
+    },
+    {
+      "name": "goal",
+      "description": "The city's current goal and its Lumen reward",
+      "readOnly": true
+    },
+    {
+      "name": "events",
+      "description": "How many of each random event the city has seen, and the latest ones",
+      "readOnly": true
+    },
+    {
+      "name": "cityReport",
+      "description": "A full report: tier, budget, energy, water, demand, recent events",
+      "readOnly": true
+    },
+    {
+      "name": "aiPlay",
+      "description": "Let the AI Mayor play: \"dream\" builds a wild sandbox world (your city stays safe), \"city\" builds your own city",
+      "params": {
+        "mode": {
+          "type": "string",
+          "description": "dream | insane | city; dream if left out"
+        },
+        "style": {
+          "type": "string",
+          "description": "balanced | sprawl | eco | mega | spiral | fractal | ring | isle | vine | wild (optional)"
+        },
+        "cataclysms": {
+          "type": "boolean",
+          "description": "meteors flatten blocks for the AI to rebuild (optional)"
+        }
+      }
+    },
+    {
+      "name": "aiPace",
+      "description": "Set how fast the AI Mayor thinks: 1, 2 or 4",
+      "params": {
+        "pace": {
+          "type": "number",
+          "description": "1, 2, 4 or 8 (ludicrous)"
+        }
+      },
+      "required": [
+        "pace"
+      ]
+    },
+    {
+      "name": "aiNextWorld",
+      "description": "While the AI dreams, leave this world (it is saved) and dream a fresh one"
+    },
+    {
+      "name": "aiStop",
+      "description": "Stop the AI Mayor (a dream world ends and your city comes back)"
+    },
+    {
+      "name": "aiStats",
+      "description": "How much the AI Mayor has built, and its best dream world",
+      "readOnly": true
+    }
+  ],
+  "memoryKeys": {
+    "ai": "AI Mayor tally { v:1, builds, dreams, dreamBestPop, dreamBestName, cityBuilds, insane, pace: 1|2|4, style: balanced|sprawl|eco|mega|spiral|fractal|ring|wild, watchMin: minutes spent watching, styleBes"
+  },
+  "series": null,
+  "queued": null,
+  "queuedNotes": null,
+  "queuedOrigin": null,
+  "queuedBy": null,
+  "runtime": [
+    {
+      "day": "2026-10-16",
+      "usd": 0,
+      "n": {
+        "think": 2
+      }
+    }
+  ],
+  "favoritedAt": 1792159905731,
+  "failure": null
+}
